@@ -6,7 +6,7 @@ That is, sending a HTTP request to a remote server, without waiting for a respon
 Additionally, FF provides the ability to protect sensitive payloads by encrypting the data in transit between both the client and upstream servers.
 
 **Disclaimer:**
-This project was merely a learning exercise as well as my first sizeable project delving into C or even systems programming as a whole. If you somehow manage to find a use-case, please do **not** use this in production.
+This project was merely a learning exercise as well as my first sizeable project delving into C or even systems programming as a whole. If you somehow manage to find a use-case, please do **not** use this in production. If you need a protocol with reduced reliability and minimal overhead please look into [CoAP](https://en.wikipedia.org/wiki/Constrained_Application_Protocol).
 
 ## How it works
 
@@ -81,7 +81,8 @@ Or it can be [installed locally from the source](/docs/installing-from-source.md
 | Argument                 | Required | Description                                                                                    |
 | ------------------------ | -------- | ---------------------------------------------------------------------------------------------- |
 | `--port <port>`          | Yes      | The UDP port to listen for incoming requests                                                   |
-| `--ip-address <ip>`      | No       | The IP address for which to accept incoming packets, defaulting to wildcard address: _0.0.0.0_ |
+| `--ip-address <ip>`      | No       | The IP address for which to accept incoming packets, defaulting to IPv4 wildcard address: _0.0.0.0_ |
+| `--ipv6-v6only`          | No       | When listening on IPv6 don't accept IPv4 connections                                           |
 | `--pre-shared-key <key>` | No       | The pre-shared key used to decrypt incoming requests                                           |
 | `-v`, `-vv`, `-vvv`      | No       | Enable verbose logging                                                                         |
 
