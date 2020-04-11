@@ -39,7 +39,7 @@ On the other hand, we have the UDP protocol. UDP is very simple comparatively an
 
 UDP lets us avoid the overhead of the network by removing any need for a handshake process before data can be exchanged. However HTTP web servers typically do not listen for traffic on UDP ports hence is not a viable solution on it's own.
 
-FF Proxy makes it possible to send HTTP requests over UDP by acting as the middle man. Listening for HTTP requests over UDP and forwarding the the requests to the destination web server over TCP.
+FF Proxy makes it possible to send HTTP requests over UDP by acting as the middle man. Listening for HTTP requests over UDP and forwarding the requests to the destination web server over TCP.
 
 ![FF Proxy](https://www.lucidchart.com/publicSegments/view/1a17a71b-13fd-467d-8380-ccc6d0622514/image.png)
 
@@ -78,13 +78,14 @@ Or it can be [installed locally from the source](/docs/installing-from-source.md
 
 #### Arguments
 
-| Argument                 | Required | Description                                                                                    |
-| ------------------------ | -------- | ---------------------------------------------------------------------------------------------- |
-| `--port <port>`          | Yes      | The UDP port to listen for incoming requests                                                   |
-| `--ip-address <ip>`      | No       | The IP address for which to accept incoming packets, defaulting to IPv4 wildcard address: _0.0.0.0_ |
-| `--ipv6-v6only`          | No       | When listening on IPv6 don't accept IPv4 connections                                           |
-| `--pre-shared-key <key>` | No       | The pre-shared key used to decrypt incoming requests                                           |
-| `-v`, `-vv`, `-vvv`      | No       | Enable verbose logging                                                                         |
+| Argument                    | Required | Description                                                                                         |
+| --------------------------- | -------- | --------------------------------------------------------------------------------------------------- |
+| `--port <port>`             | Yes      | The UDP port to listen for incoming requests                                                        |
+| `--ip-address <ip>`         | No       | The IP address for which to accept incoming packets, defaulting to IPv4 wildcard address: _0.0.0.0_ |
+| `--ipv6-v6only`             | No       | When listening on IPv6 don't accept IPv4 connections                                                |
+| `--pre-shared-key <key>`    | No       | The pre-shared key used to decrypt incoming requests                                                |
+| `--pbkdf2-iterations <num>` | No       | The number of iterations used to derive the encryption key using PBKDF2 (default: 1000)             |
+| `-v`, `-vv`, `-vvv`         | No       | Enable verbose logging                                                                              |
 
 #### Testing
 
