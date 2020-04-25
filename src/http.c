@@ -22,7 +22,9 @@ void ff_http_send_request(struct ff_request *request)
 {
     bool https = false;
 
-    for (int i = 0; i < request->options_length; i++)
+    // Read options backwards to ensure the encrypted options take precedence
+    uint8_t i = request->options_length;
+    while (i-- > 0)
     {
         switch (request->options[i]->type)
         {
@@ -213,7 +215,6 @@ bool ff_http_send_request_tls(struct ff_request *request, char *host_name)
     long res = 1;
 
     SSL_CTX *ctx = NULL;
-    X509_VERIFY_PARAM *param = NULL;
     BIO *web = NULL;
     SSL *ssl = NULL;
     char error_string[256] = {0};
@@ -277,13 +278,18 @@ bool ff_http_send_request_tls(struct ff_request *request, char *host_name)
         goto error;
     }
 
-    param = SSL_get0_param(ssl);
-    res = X509_VERIFY_PARAM_set1_host(param, host_name, strlen(host_name));
-    if (res != 1)
+#ifndef OPENSSL_SKIP_HOST_VALIDATION
     {
-        ff_log(FF_ERROR, "Failed to set OpenSSL param host name");
-        goto error;
+        X509_VERIFY_PARAM *param = SSL_get0_param(ssl);
+
+        res = X509_VERIFY_PARAM_set1_host(param, host_name, strlen(host_name));
+        if (res != 1)
+        {
+            ff_log(FF_ERROR, "Failed to set OpenSSL param host name");
+            goto error;
+        }
     }
+#endif
 
     SSL_set_verify(ssl, SSL_VERIFY_PEER, NULL);
 
